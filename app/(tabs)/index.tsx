@@ -1,11 +1,38 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, Alert, PermissionsAndroid } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useEffect } from 'react';
+import messaging from "@react-native-firebase/messaging"
 
 export default function HomeScreen() {
+  
+  //Ask permission to display notifications for Android 13 or higher
+  // PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+
+  async function getFcmToken() {
+    try {
+      const fcmToken = await messaging().getToken();
+      if (fcmToken) {
+        console.log("Your token is:", fcmToken);
+      } else {
+        console.log("Failed", "No token received");
+      }
+    } catch (error) {
+      console.log("Error getting FCM token:", error);
+    }
+  }
+    
+  messaging().onMessage(async remoteMessage => {
+    Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  });
+  
+  useEffect(() => {
+    getFcmToken();
+  }, []);
+  
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
