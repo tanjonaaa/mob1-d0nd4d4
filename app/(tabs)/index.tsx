@@ -6,6 +6,16 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useEffect } from 'react';
 import messaging from "@react-native-firebase/messaging"
+import * as Notifications from 'expo-notifications';
+
+// notification Expo Configuration 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 export default function HomeScreen() {
   
@@ -26,10 +36,35 @@ export default function HomeScreen() {
   }
     
   messaging().onMessage(async remoteMessage => {
-    Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    //Expo Notifications
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: remoteMessage.notification?.title || 'Nouvelle notification',
+        body: remoteMessage.notification?.body || '',
+        data: remoteMessage.data,
+      },
+      trigger: null, // Affichage immédiat
+    });
   });
   
   useEffect(() => {
+    // Permissions
+    async function requestPermissions() {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      
+      if (finalStatus !== 'granted') {
+        console.log('Permission refused');
+        return;
+      }
+    }
+
+    requestPermissions();
     getFcmToken();
   }, []);
   
