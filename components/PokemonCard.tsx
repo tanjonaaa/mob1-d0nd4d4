@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
 import usePokemon from '../hooks/usePokemon';
 
-const PokemonCard = ({ name }: { name: string }) => {
+const PokemonCard = ({ name, onPress }: { name: string, onPress: () => void }) => {
   const { pokemon, loading } = usePokemon(name);
 
   if (loading) return <ActivityIndicator />;
@@ -10,7 +10,7 @@ const PokemonCard = ({ name }: { name: string }) => {
   const imageUrl = pokemon?.sprites?.front_default;
 
   return (
-    <View style={styles.card}>
+    <View style={styles.card} onTouchEnd={onPress}>
       <View style={styles.textContainer}>
         <Text style={styles.name}>{pokemon?.name}</Text>
         <Text>Height: {pokemon?.height}</Text>
