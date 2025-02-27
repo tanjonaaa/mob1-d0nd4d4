@@ -1,12 +1,19 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 import PokemonCard from '../../components/PokemonCard';
 
 const HomeScreen = () => {
+  const router = useRouter();
+
+  const handlePokemonPress = (pokemonName: string) => {
+    router.push(`/(pokemon)/detail?pokemonName=${pokemonName}`);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <PokemonCard name="pikachu" />
-      <PokemonCard name="bulbasaur" />
+      <PokemonCard name="pikachu" onPress={() => handlePokemonPress('pikachu')} />
+      <PokemonCard name="bulbasaur" onPress={() => handlePokemonPress('bulbasaur')} />
     </ScrollView>
   );
 };
