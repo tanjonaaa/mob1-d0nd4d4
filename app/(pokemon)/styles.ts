@@ -8,13 +8,16 @@ export default StyleSheet.create({
         flexGrow: 1,
       },
       header: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         padding: 20,
         paddingTop: 40,
+        marginBottom: 50,
       },
       name: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: 'white',
         textTransform: 'capitalize',
       },
       number: {
@@ -51,11 +54,11 @@ export default StyleSheet.create({
         marginBottom: 20,
       },
       tab: {
-        color: '#999',
+        color: '#e4e3e3',
         fontSize: 16,
       },
       activeTab: {
-        color: '#000',
+        color: '#ffffff',
         fontSize: 16,
         fontWeight: 'bold',
       },
@@ -63,16 +66,6 @@ export default StyleSheet.create({
         flexDirection: 'row',
         gap: 10,
         marginTop: 10,
-      },
-      typeTag: {
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        borderRadius: 20,
-      },
-      typeText: {
-        color: 'white',
-        fontWeight: 'bold',
       },
       statsContainer: {
         gap: 15,

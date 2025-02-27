@@ -68,7 +68,6 @@ export const EvolutionTab = ({ pokemon }: Props) => {
       <View style={styles.evolutionChain}>
         {evolutions.map((evolution, index) => (
           <React.Fragment key={evolution.name}>
-            {index > 0 && <Text style={styles.arrow}>→</Text>}
             <View style={styles.evolutionItem}>
               <Image 
                 source={{ uri: evolution.sprite }} 
@@ -107,12 +106,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    color: '#333',
+    color: '#fff',
     textTransform: 'capitalize',
   },
   level: {
     fontSize: 14,
-    color: '#666',
+    color: '#e4e3e3',
   },
   arrow: {
     fontSize: 24,

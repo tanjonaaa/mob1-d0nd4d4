@@ -45,10 +45,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   infoLabel: {
-    color: '#666',
+    color: '#e6e6e6',
     fontSize: 16,
   },
   infoValue: {
+    color: '#fff',
     fontSize: 16,
     fontWeight: '500',
     textTransform: 'capitalize',

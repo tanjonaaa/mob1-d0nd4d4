@@ -1,38 +1,34 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import {ActivityIndicator, FlatList, StatusBar, StyleSheet} from 'react-native';
+import {useRouter} from 'expo-router';
 import PokemonCard from '../../components/PokemonCard';
+import usePaginatedPokemonList from "@/hooks/usePaginatedPokemonList";
 
 const HomeScreen = () => {
-  const router = useRouter();
+    const router = useRouter();
+    const {pokemons, loading, fetchPokemons} = usePaginatedPokemonList(0)
 
-  const handlePokemonPress = (pokemonName: string) => {
-    router.push(`/(pokemon)/detail?pokemonName=${pokemonName}`);
-  };
+    const handlePokemonPress = (pokemonName: string) => {
+        router.push(`/(pokemon)/detail?pokemonName=${pokemonName}`);
+    };
 
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <PokemonCard name="pikachu" onPress={() => handlePokemonPress('pikachu')} />
-      <PokemonCard name="bulbasaur" onPress={() => handlePokemonPress('bulbasaur')} />
-    </ScrollView>
-  );
+    return (
+        <FlatList
+            style={styles.container}
+            data={pokemons}
+            keyExtractor={item => item.name}
+            onEndReached={fetchPokemons}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={loading ? <ActivityIndicator/> : null}
+            renderItem={({item}) => <PokemonCard pokemon={item} onPress={() => handlePokemonPress(item.name)}/>}/>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    paddingRight: 20,
-    paddingLeft: 20,
-    gap: 20
-  },
-  scrollView: {
-    backgroundColor: 'pink',
-  },
-  text: {
-    fontSize: 42,
-    padding: 12,
-  },
+    container: {
+        flex: 1,
+        marginTop: StatusBar.currentHeight || 0,
+    }
 });
 
 export default HomeScreen;

@@ -26,7 +26,7 @@ export const StatsTab = ({ pokemon, mainColor }: Props) => {
                 styles.statBar, 
                 { 
                   width: `${(stat.base_stat / 255) * 100}%`,
-                  backgroundColor: mainColor
+                  backgroundColor: '#ff4949'
                 }
               ]} 
             />
@@ -50,12 +50,13 @@ const styles = StyleSheet.create({
   statName: {
     width: 80,
     fontSize: 14,
-    color: '#666',
+    color: '#e6e6e6',
   },
   statValue: {
     width: 30,
     fontSize: 14,
     fontWeight: 'bold',
+    color: '#fff'
   },
   statBarContainer: {
     flex: 1,
